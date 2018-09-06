@@ -17,7 +17,7 @@ const adminController = {
       return res.status(400).send({ errors });
     }
     const email = req.body.email.toLowerCase();
-    const password = req.body.password;
+    const [password] = [req.body];
 
     const findAdmin = Admin.findByEmail(email);
 

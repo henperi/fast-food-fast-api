@@ -49,7 +49,7 @@ const usersController = {
       return res.status(400).json({ errors });
     }
     const email = req.body.email.toLowerCase();
-    const password = req.body.password;
+    const [password] = [req.body];
 
     const findUser = User.findByEmail(email);
 
