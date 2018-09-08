@@ -4,7 +4,7 @@
   "description": "Fast Food Fast Nodejs API with \u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D App\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Csome API endpoints",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/test.js --compilers js:babel-core/register",
     "build": "babel server.js --out-dir build",
     "dev-start": "babel-watch server.js",
     "start": "babel-node server.js"
@@ -33,10 +33,13 @@
     "babel-eslint": "^9.0.0",
     "babel-preset-env": "^1.7.0",
     "babel-watch": "^2.0.7",
+    "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "mocha": "^5.2.0"
   }
 }
