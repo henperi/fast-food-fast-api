@@ -1,7 +1,7 @@
 {
   "name": "fast-food-fast-api",
   "version": "1.0.0",
-  "description": "Fast Food Fast Nodejs API with \u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D App\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Csome API endpoints",
+  "description": "Fast Food Fast Nodejs API with some API endpoints",
   "main": "server.js",
   "scripts": {
     "test": "mocha test/test.js --compilers js:babel-core/register",
