@@ -10,10 +10,7 @@ const foodsController = {
     const fetchFoods = Food.findAll();
     const count = fetchFoods.length;
 
-    if (!fetchFoods) {
-      return res.status(404).send({ message: 'No food found' });
-    }
-    if (fetchFoods.length === 0) {
+    if (!fetchFoods || fetchFoods.length === 0) {
       return res.status(404).send({ message: 'No food found' });
     }
     return res.status(200).send({
@@ -32,13 +29,8 @@ const foodsController = {
     const [foodId] = [req.params.foodId];
     const fetchFood = Food.findOne(foodId);
 
-    if (!fetchFood) {
+    if (!fetchFood || fetchFood.length === 0) {
       return res.status(404).json({ message: 'Food not found' });
-    }
-    if (fetchFood.length === 0) {
-      return res.status(404).json({
-        message: 'Food not found',
-      });
     }
     return res.status(201).json({
       message: 'Food found',
@@ -91,18 +83,13 @@ const foodsController = {
     const [foodId] = [req.params.foodId];
     const findFood = Food.findOne(foodId);
 
-    if (!findFood) {
+    if (!findFood || findFood.length === 0) {
       return res.status(409).json({
         message: 'This particular food can not be updated as its id does not exist',
       });
     }
-    if (findFood.length === 0) {
-      return res.status(409).json({
-        message: 'This particular food can not be updated as its id does not exist',
-      });
-    }
-    findFood.foodName = req.body.foodName;
 
+    findFood.foodName = req.body.foodName;
     return res.status(201).json({
       message: 'food updated',
       updatedFood: findFood,

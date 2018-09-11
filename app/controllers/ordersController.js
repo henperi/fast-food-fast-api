@@ -11,10 +11,7 @@ const ordersController = {
     const fetchOrders = Order.findAll();
     const count = fetchOrders.length;
 
-    if (!fetchOrders) {
-      return res.status(404).send({ message: 'No orders were found' });
-    }
-    if (fetchOrders.length === 0) {
+    if (!fetchOrders || fetchOrders.length === 0) {
       return res.status(404).send({ message: 'No orders were found' });
     }
     return res.status(200).send({
@@ -32,13 +29,8 @@ const ordersController = {
     const [orderId] = [req.params.orderId];
     const fetchOrder = Order.findOne(orderId);
 
-    if (!fetchOrder) {
+    if (!fetchOrder || fetchOrder.length === 0) {
       return res.status(404).json({ message: 'Order not found' });
-    }
-    if (fetchOrder.length === 0) {
-      return res.status(404).json({
-        message: 'Order not found',
-      });
     }
     return res.status(201).json({
       message: 'Order found',
@@ -72,12 +64,20 @@ const ordersController = {
     for (let i = 0; i < submittedFoodItems.length; i += 1) {
       const [foodId] = [submittedFoodItems[i].foodId];
       const [quantity] = [submittedFoodItems[i].quantity];
-      if (!foodId || !quantity) {
+      if (!foodId) {
         return res.status(400).json({
           message: 'Order not created',
-          reasons:
-            'Submitted foodItem does not have a valid format. foodId param or quantity param is not defined',
-          description: `foodItems value must be an array containing object literals which have foodId and quantity as parameters, 
+          reasons: 'foodItems.foodId param is not defined',
+          description: `foodItems value must be an array containing object literals which have foodId and quantity as parameters. 
+          example: \n { foodItems: [{ foodId: 4801ac7c-4f19-4299-b709-aab25de4f088, quantity: 2 }] }.
+          visit /orders to see sample existing foodIds`,
+        });
+      }
+      if (!quantity) {
+        return res.status(400).json({
+          message: 'Order not created',
+          reasons: 'foodItems.quantity param is not defined',
+          description: `foodItems value must be an array containing object literals which have foodId and quantity as parameters. 
           example: \n { foodItems: [{ foodId: 4801ac7c-4f19-4299-b709-aab25de4f088, quantity: 2 }] }.
           visit /orders to see sample existing foodIds`,
         });
@@ -130,12 +130,7 @@ const ordersController = {
     const [orderId] = [req.params.orderId];
     const findOrder = Order.findOne(orderId);
 
-    if (!findOrder) {
-      return res.status(409).json({
-        message: 'This particular order can not be updated as it does not exist',
-      });
-    }
-    if (findOrder.length === 0) {
+    if (!findOrder || findOrder.length === 0) {
       return res.status(409).json({
         message: 'This particular order can not be updated as it does not exist',
       });
@@ -158,11 +153,8 @@ const ordersController = {
 
     const fetchOrder = Order.findOne(orderId, userId);
 
-    if (!fetchOrder) {
+    if (!fetchOrder || fetchOrder.length === 0) {
       return res.status(404).json({ message: 'Order not found' });
-    }
-    if (fetchOrder.length === 0) {
-      return res.status(404).send({ message: 'No orders were found' });
     }
     return res.status(201).json({
       message: 'Order found',
@@ -179,11 +171,8 @@ const ordersController = {
 
     const fetchOrder = Order.findUserOrders(userId);
 
-    if (fetchOrder.length === 0) {
+    if (!fetchOrder || fetchOrder.length === 0) {
       return res.status(404).json({ message: 'Order not found' });
-    }
-    if (fetchOrder.length === 0) {
-      return res.status(404).send({ message: 'No orders were found' });
     }
     return res.status(201).json({
       message: 'Order found',
