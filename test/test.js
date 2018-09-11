@@ -48,9 +48,7 @@ describe('Orders Route Tests', () => {
           // console.log(result.body);
           expect(result).to.have.status(400);
           expect(result.body).to.be.an('object');
-          expect(result.body.reasons).to.be.equal(
-            'Submitted foodItem does not have a valid format. foodId param or quantity param is not defined',
-          );
+          expect(result.body.reasons).to.be.equal('foodItems.quantity param is not defined');
           expect(result.body.message).to.be.equal('Order not created');
           done();
         });
